@@ -1,7 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 // http://localhost:3000/api/user
 @Controller('user')
@@ -9,27 +8,15 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @UsePipes( new ValidationPipe()) // в middleware добавили валидацию (промежуточная задача)
+//(получим тело() запишем его в createUserDto: и ожидаемый тип полей это - "CreateUserDto"). 
+//В данном случаем, мы будем ожидать поля email и password 
+  create(@Body() createUserDto: CreateUserDto) { 
+    return this.userService.create(createUserDto); // логика используется из модуля userService
   }
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
-  }
+  // @Get()
+  // findOne() {
+  //   return this.userService.findOne(1);
+  // }
 }

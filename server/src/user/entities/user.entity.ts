@@ -1,5 +1,5 @@
 import { Transaction } from './../../transaction/entities/transaction.entity';
-//! Таблица для БД, сущности user
+//! Таблица (схема) для БД, сущности user
 import { Category } from "src/category/entities/category.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
