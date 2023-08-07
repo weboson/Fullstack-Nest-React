@@ -34,8 +34,8 @@ constructor(
     return {user}; // посмотрим, что сохранилось
   }
 
-// получить данные user по id 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+// запрос к БД: для совпадения входящего email с 'email' из БД, ожидается true / false
+  async findOne(email: string) {
+    return await this.userRepository.findOne({ where: { email: email, }}); // поиск совпадения. БД через 'typeorm'
   }
 }

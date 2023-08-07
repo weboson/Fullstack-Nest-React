@@ -10,6 +10,7 @@ import { UserController } from './user.controller';
     TypeOrmModule.forFeature([User]) // аналог forRoot (в главном модуле), но уже в дополнительном модуле
   ],
   controllers: [UserController],
-  providers: [UserService]
+  providers: [UserService],
+  exports: [UserService], // мы экспортировали в глобалку, что импортировать в auth.module.ts
 })
 export class UserModule {}

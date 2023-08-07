@@ -1,26 +1,21 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { UserService } from './../user/user.service';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import * as argon2 from "argon2"; // https://www.npmjs.com/package/argon2 - хэширование password
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
-  }
+  constructor(private readonly userService: UserService) {}
 
-  findAll() {
-    return `This action returns all auth (проверка auth)`;
-  }
+  //  валидация на совпадения полей
+  async validateUser(email: string, password: string) {
+    const user = await this.userService.findOne(email); // используем метод findOne из userService, чтобы найти пользователя ПО ТАКОМУ 'email'
+    // валидируем password с помощью argon2, который также расшифровывает (хэш) password
+    const passwordIsMatch = await argon2.verify(user.password, password); // user-а которого нашли по 'email', мы также проверим схожесть password с тем который вводиться (аргумент)
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    if (user && passwordIsMatch) { // если user по 'email' найден и пароли совпадают
+      return user
+    }
+    throw new UnauthorizedException('User or password are incorrect'); // иначе ошибка с сообщением
   }
 }
