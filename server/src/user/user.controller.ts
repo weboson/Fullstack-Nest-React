@@ -7,6 +7,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  // добавление нового пользователя + GET => JWToken
   @Post()
   @UsePipes( new ValidationPipe()) // в middleware добавили валидацию (промежуточная задача)
 //(получим тело() запишем его в createUserDto: и ожидаемый тип полей это - "CreateUserDto"). 
@@ -15,8 +16,4 @@ export class UserController {
     return this.userService.create(createUserDto); // логика используется из модуля userService
   }
 
-  // @Get()
-  // findOne() {
-  //   return this.userService.findOne(1);
-  // }
 }
