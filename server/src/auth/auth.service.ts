@@ -1,10 +1,16 @@
+// логика валидации
 import { UserService } from './../user/user.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as argon2 from "argon2"; // https://www.npmjs.com/package/argon2 - хэширование password
+import { JwtService } from '@nestjs/jwt';
+import { IUser } from 'src/types/types';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+    ) {}
 
   //  валидация на совпадения полей
   async validateUser(email: string, password: string) {
@@ -17,5 +23,18 @@ export class AuthService {
       return user
     }
     throw new UnauthorizedException('User or password are incorrect'); // иначе ошибка с сообщением
+  }
+
+
+  // метод для формирования и отправки клиенту JWToken
+  async login(user: IUser) { // IUser {id: string, email: string}
+    // const payload = { id: user.id, email: user.email };
+    const {id, email} = user;
+    return {
+      id, 
+      email, 
+      // jwtService должен быть подключен в server\src\auth\auth.module.ts
+      token: this.jwtService.sign({ id: user.id, email: user.email }), // и возращается клиенту сформированный токен из всех данных (id, email)
+    };
   }
 }

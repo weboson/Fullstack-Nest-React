@@ -1,13 +1,12 @@
-## Fullstack Nest-React
+# Fullstack Nest-React
 
-# I'm learning fullstask from video (playlist): 
+## I'm learning fullstask from video (playlist): 
 https://www.youtube.com/playlist?list=PLkUJHNMBzmtQj5qvTCqn0uMXFDG4ENiwf 
 
 
-## Stack--
-# Client:
+# Stack--
+## Client:
 1. React
-
 
 # Server:
 1. Nest.js: 9.0.0
