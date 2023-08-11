@@ -1,6 +1,6 @@
 import { Transaction } from './../../transaction/entities/transaction.entity';
 import { User } from './../../user/entities/user.entity';
-// Таблица в БД сущности Category 
+// Таблица (схема) в БД сущности Category 
 import { Column, CreateDateColumn, UpdateDateColumn, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 
 @Entity()

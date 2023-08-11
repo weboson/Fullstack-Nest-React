@@ -1,5 +1,5 @@
 // ожидаемый тип данных (user должен ввести именно такие поля "email", "password")
-// пакет для валидации
+// пакет для валидации (входящих данных в БД)
 import { IsEmail, MinLength } from "class-validator"
 
 export class CreateUserDto {
