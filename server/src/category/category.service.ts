@@ -79,7 +79,13 @@ export class CategoryService {
 
 
   //! @Delete(':id') - удалить определенную категорию по id (url params)
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: number) {
+// проврека на наличие
+  const category = await this.categotyRepository.findOne({
+    where: { id: id }
+  }) 
+  if(!category) throw new NotFoundException('Category not found!')
+
+    return await this.categotyRepository.delete(id); // найди по id, и удалить;
   }
 }

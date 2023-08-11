@@ -36,6 +36,7 @@ export class CategoryController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard) // так же проверка на авторизацию, чтобы иметь права на удаление
   remove(@Param('id') id: string) {
     return this.categoryService.remove(+id);
   }
