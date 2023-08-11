@@ -1,5 +1,5 @@
 import { JwtAuthGuard } from './../auth/guards/jwt-auth.guard';
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -9,24 +9,28 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Post()
-  // охранник Guard 
+  @Post() // отпаврить новые данные (создание категории и сохранение в БД)
+  // охранник Guard - проверка JWToken текущего пользователя (залогинен ли?)
   @UseGuards(JwtAuthGuard) // получим через @Req - объект user и соответственно user.id
+  @UsePipes(new ValidationPipe()) // валидация от Nest 
   create(@Body() createCategoryDto: CreateCategoryDto, @Req() req) {
     return this.categoryService.create(createCategoryDto, +req.user.id);
   }
 
-  @Get()
-  findAll() {
-    return this.categoryService.findAll();
+  @Get() // получить все категории (текущего пользователя)
+  @UseGuards(JwtAuthGuard) // проверим текущего пользователя на токен, и получим его user.id
+  findAll(@Req() req) {
+    return this.categoryService.findAll(+req.user.id); // поиск в cateries по полю user_id: текущий user
   }
 
-  @Get(':id')
+  @Get(':id') // получить одну категорию
+  @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: string) {
     return this.categoryService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch(':id') // обновление
+  @UseGuards(JwtAuthGuard)
   update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
     return this.categoryService.update(+id, updateCategoryDto);
   }

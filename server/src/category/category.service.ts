@@ -1,5 +1,5 @@
 import { Category } from 'src/category/entities/category.entity'; // схема (таблица) для БД
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,6 +13,7 @@ export class CategoryService {
     private readonly categotyRepository: Repository<Category>, // пример дженерика Array<number> = [1,2,3]
   ) {}
 
+  //! POST (создать) 
   async create(createCategoryDto: CreateCategoryDto, id: number) { // id для идентификации определенной категории
     // убедится, что нет совпадений входной категории с уже существующей в БД
     // есть ли у этого user-a (id) такая категория?
@@ -36,13 +37,31 @@ export class CategoryService {
 
 
 
-
-  findAll() {
-    return `This action returns all category (проверка category)`;
+  //! GET (получить все категории относящиеся к текущему user-у) 
+  async findAll( id: number ) {
+    return await this.categotyRepository.find({
+      where: {
+        user: {id: id},
+      },
+      relations: { // связать с транзакциями (в category.entity.ts связь установлена)
+        transactions: true
+      }
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  //! GET(:id) получить одну категорию по "category_id"
+  async findOne(id: number) { // id берется из URL-params (31): localhost:3000/categories/31
+    const category = await this.categotyRepository.findOne({
+      where: { id: id }, // поле из БД "id" === из url "id"
+      relations: {
+        user: true, // подтягивать данные из user
+        transactions: true, // также и тарнзакции
+      }
+    })
+
+    if(!category) throw new NotFoundException('Category not found')
+
+    return category;
   }
 
   update(id: number, updateCategoryDto: UpdateCategoryDto) {
