@@ -30,7 +30,7 @@ export class CategoryController {
   }
 
   @Patch(':id') // обновление
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard) // так же проверка на авторизацию
   update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
     return this.categoryService.update(+id, updateCategoryDto);
   }

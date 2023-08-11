@@ -64,10 +64,21 @@ export class CategoryService {
     return category;
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+//! Patch(:id)
+  async update(id: number, updateCategoryDto: UpdateCategoryDto) { // id (url params), @Body() новые данные
+    // найти совпадение в категориях по id (url) в БД
+    const category = await this.categotyRepository.findOne({
+      where: { id: id }
+    }) 
+
+    // если нет совпадений (не найдено)
+    if(!category) throw new NotFoundException('Category not found!')
+    // если найдено совпадение, то обновить
+    return await this.categotyRepository.update(id, updateCategoryDto); // найди по id, и замени новыми данными
   }
 
+
+  //! @Delete(':id') - удалить определенную категорию по id (url params)
   remove(id: number) {
     return `This action removes a #${id} category`;
   }
