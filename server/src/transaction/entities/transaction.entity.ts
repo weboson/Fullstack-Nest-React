@@ -1,5 +1,5 @@
 import { Category } from 'src/category/entities/category.entity';
-//! Таблица для БД, сущности Transaction (доход/расход)
+//! Таблица для БД, сущности Transaction (доход/расход) - создалась таблица в БД
 import { User } from "src/user/entities/user.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
@@ -15,12 +15,12 @@ export class Transaction {
     @Column({ nullable: true }) // позволенное значение, т.е. может быть null 
     type: string; // тип: доход или расход
 
-    // связь
+    // связь: привязать к текущему пользователю
     @ManyToOne(() => User, (user) => user.transactions)
     @JoinColumn({ name: 'user_id' }) // объединить  в колонку "user_id"
     user: User;
 
-    // связь
+    // связь: привязать к текущей категории
     @ManyToOne(() => Category, (category) => category.transactions)
     @JoinColumn({ name: 'category_id' })
     category: Category;

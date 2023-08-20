@@ -3,6 +3,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, UseP
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { AuthorGuard } from 'src/guard/author.guard';
 
 // http://localhost:3000/api/category
 @Controller('categories')
@@ -23,20 +24,20 @@ export class CategoryController {
     return this.categoryService.findAll(+req.user.id); // поиск в cateries по полю user_id: текущий user
   }
 
-  @Get(':id') // получить одну категорию
-  @UseGuards(JwtAuthGuard)
+  @Get(':type/:id') // получить одну категорию
+  @UseGuards(JwtAuthGuard, AuthorGuard)
   findOne(@Param('id') id: string) {
     return this.categoryService.findOne(+id);
   }
 
-  @Patch(':id') // обновление
-  @UseGuards(JwtAuthGuard) // так же проверка на авторизацию
+  @Patch(':type/:id') // обновление
+  @UseGuards(JwtAuthGuard, AuthorGuard) // так же проверка на авторизацию
   update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
     return this.categoryService.update(+id, updateCategoryDto);
   }
 
-  @Delete(':id')
-  @UseGuards(JwtAuthGuard) // так же проверка на авторизацию, чтобы иметь права на удаление
+  @Delete(':type/:id')
+  @UseGuards(JwtAuthGuard, AuthorGuard) // так же проверка на авторизацию, чтобы иметь права на удаление
   remove(@Param('id') id: string) {
     return this.categoryService.remove(+id);
   }
