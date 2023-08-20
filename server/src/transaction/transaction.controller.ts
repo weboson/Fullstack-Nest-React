@@ -17,9 +17,14 @@ export class TransactionController {
     return this.transactionService.create(createTransactionDto, +req.user.id);
   }
 
-
+  //! Для суммирования дохода или расхода: expense' | 'income';
+  @Get(':type/find') // type - это 'expense' или  'income'
+  @UseGuards(JwtAuthGuard) // проверка на авторизацию пользователя
+  findAllByType(@Req() req, @Param('type') type: string) {
+    return this.transactionService.findAllByType(+req.user.id, type)
+  }
   
-  //! Pagination - важно, чтобы был в начале (после @Post)
+  // Pagination - важно, чтобы был в начале (после @Post)
   //url/transactions/pagination?page=1&limit=3
   @Get('pagination') // отдельный роут (url)
   @UseGuards(JwtAuthGuard) // проверка на авторизацию пользователя

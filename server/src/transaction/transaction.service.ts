@@ -105,4 +105,20 @@ export class TransactionService {
 
     return transaction;
   }
+
+
+  //! @Get - получить сумму всех доходом или расходом (в зависимости от :type)
+  async findAllByType(id: number, type: string) {
+    const transaction = await this.transactionRepository.find({
+      where: {
+        user: {id: id}, // где user.id == id из аргументов
+        type: type, // отфильтровали 'expense' и  'income'
+      }
+    })
+
+    // суммировали 'expense' или 'income', в зависимости от аргумента ':type'
+    const total = transaction.reduce((accum, obj) => accum + obj.amount, 0); 
+
+    return total;
+  }
 }
