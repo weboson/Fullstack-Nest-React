@@ -6,7 +6,9 @@ https://www.youtube.com/playlist?list=PLkUJHNMBzmtQj5qvTCqn0uMXFDG4ENiwf
 
 # Stack--
 ## Client:
-1. React
+1. React: "^18.2.0"
+2. Vite: "^4.4.5" 
+3. Tailwind
 
 # Server:
 1. Nest.js: 9.0.0
