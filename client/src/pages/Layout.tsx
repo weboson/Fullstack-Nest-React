@@ -1,3 +1,4 @@
+// основной шаблон (header+menu+content+footer)
 import { FC } from "react";
 
 const Layout: FC = () => {
