@@ -1,11 +1,8 @@
-function App() {
-  return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-      
+import { RouterProvider } from "react-router-dom"
+import { router } from "./router/router" // наша разметка маршрутов
 
-  )
+function App() {
+  return <RouterProvider router={router} />
 }
 
 export default App
