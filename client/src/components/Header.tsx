@@ -4,7 +4,7 @@ import { FaBtc, FaSignOutAlt } from 'react-icons/fa'; // библиотека и
 
 const Header: FC = () => {
     // залогинен ли пользователь
-    const isAuth = true;
+    const isAuth = false;
 
     return (
         <header className='flex items-center p-4 shadow-sm bg-slate-800 backdrop-blur-sm'>
@@ -33,18 +33,18 @@ const Header: FC = () => {
             }
             {
                 // button log_in/log_out
-                isAuth 
-                ? (
-                    <button className='btn btn-red'>
-                        <span>Log Out</span>
-                        <FaSignOutAlt />
-                    </button>
-                ) 
-                : (
-                    <Link to={'auth'} className='py-2 text-white/50 hover:text-white ml-auto'>
-                        Log In / Sing In
-                    </Link>
-                )
+                isAuth
+                    ? (
+                        <button className='btn btn-red'>
+                            <span>Log Out</span>
+                            <FaSignOutAlt />
+                        </button>
+                    )
+                    : (
+                        <Link to={'auth'} className='py-2 text-white/50 hover:text-white ml-auto'>
+                            Log In / Sing In
+                        </Link>
+                    )
             }
         </header>
     )
