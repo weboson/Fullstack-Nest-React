@@ -11,6 +11,7 @@ https://www.youtube.com/playlist?list=PLkUJHNMBzmtQj5qvTCqn0uMXFDG4ENiwf
 3. Tailwind: "^3.3.3"
 4. React-router-dom: "^6.15.0"
 5. React-icons: "^4.10.1"
+6. Axios: "^1.5.0",
 
 # Server:
 1. Nest.js: 9.0.0
