@@ -1,16 +1,25 @@
-// ожидаемые данные отправляемые на сервер при регистрации new user (в src\services\auth.service.ts)
+// ожидаемые данные отправляемые НА сервер при регистрации new user (в src\services\auth.service.ts)
 export interface IUserData {
     email: string
     password: string
 }
 
-// ожидаемые поля в ответе от сервера при регистрации нового пользователя
+
+// ожидаемые поля в ответе ОТ сервера при регистрации нового пользователя
+// ответ: token и объект user, находящийся внутри объекта, типа так: 
+// { user: {
+//     token: ..., 
+//     user: {{email: "admin2@gmail.com",…}}}
+export interface IResponseUser {
+    id: number
+    email: string
+    password: string
+    createdAt: string
+    updatedAt: string
+}
+
+// ответ: объект token 
 export interface IResponseUserData {
-    email: string | undefined // либо тип string либо undefined 
-    password: string | undefined
-    createdAt: string | undefined
-    updatedAt: string | undefined
-    __v?: number | undefined // необязательное поля
-    _id?: string | undefined // необязательное поля
-    message: string | undefined
+    token: string
+    user: IResponseUser // так как в ответе от бэкенда => внутри token: {user: {}}
 }

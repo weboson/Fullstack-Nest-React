@@ -4,6 +4,7 @@ import { instance } from './../api/axios.api';
 import { IResponseUserData, IUserData } from "../types/types";
 
 export const AuthService = {
+    // post на 'user'
     async registration(userData: IUserData): Promise<IResponseUserData> {
         // ------------------post - запрос( 'UrlParams',  )
         const {data} = await instance.post<IUserData, {data: IResponseUserData}>('user', userData) //! instance настроен нами в axios.api.ts - userData это данные
