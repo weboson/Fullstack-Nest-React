@@ -1,3 +1,12 @@
+// тип для userSlice.ts (redux-toolkit)
+export interface IUser { 
+    id: number
+    email: string
+    token: string
+}
+
+
+
 // ожидаемые данные отправляемые НА сервер при регистрации new user (в src\services\auth.service.ts)
 export interface IUserData {
     email: string

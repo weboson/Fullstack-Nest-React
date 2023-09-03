@@ -13,6 +13,7 @@ https://www.youtube.com/playlist?list=PLkUJHNMBzmtQj5qvTCqn0uMXFDG4ENiwf
 5. React-icons: "^4.10.1"
 6. Axios: "^1.5.0"
 7. React-toastify: "^9.1.3"
+8. Reduxjs/toolkit: "^1.9.5"
 
 # Server:
 1. Nest.js: 9.0.0

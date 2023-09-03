@@ -6,7 +6,8 @@ import { IResponseUserData, IUserData } from "../types/types";
 export const AuthService = {
     // post на 'user'
     async registration(userData: IUserData): Promise<IResponseUserData> {
-        // ------------------post - запрос( 'UrlParams',  )
+        // ------------------post - запрос( 'UrlParams',  data)
+        // - IUserData - это входящие данные (email, password), выходящий тип => {IResponseUserData}
         const {data} = await instance.post<IUserData, {data: IResponseUserData}>('user', userData) //! instance настроен нами в axios.api.ts - userData это данные
         return data
     }, // => промис с ожидаемыми полями описанные в типе IResponseUserData
