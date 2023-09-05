@@ -1,7 +1,12 @@
+// компонент форма регистрации / входа
 import { FC, useState } from "react"; // FunctionComponent
 import type { FormEvent } from 'react' // тип для события формы для TS: https://youtu.be/BYsQE3Nh9IE?t=522
 import { AuthService } from "../services/auth.service"; // методы axios-запросов (instance)
 import { toast } from "react-toastify"; // анимированные сообщения
+import { setTokenToLocalStorage } from "../helpers/localstorage.helper";
+import { useAppDispatch } from "../store/hooks";   // для изменения состоянием Redux-Toolkit
+import { login } from "../store/user/userSlice"; // из slice reducers {} - Readux-toolkit
+import { useNavigate } from "react-router-dom"; // переадресация на определенную страницу (например на home)
 
 const Auth: FC = () => {
 
@@ -11,6 +16,10 @@ const Auth: FC = () => {
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  // для изменения состоянием Redux-Toolkit
+  const dispatch = useAppDispatch()
+  // переадресация на определенную страницу (например на home)
+  const navigate = useNavigate()
 
   //! обработчик для регистрации new user
   const registrationHandler = async (e: FormEvent<HTMLFormElement>) => { // https://youtu.be/BYsQE3Nh9IE?t=522
@@ -35,16 +44,24 @@ const Auth: FC = () => {
   //! обработчик для входа user (login)
   const loginHandler = async (e: FormEvent<HTMLFormElement>) => { // https://youtu.be/BYsQE3Nh9IE?t=522
     try {
-     
+      e.preventDefault() // сброс настроек браузера
+      const data = await AuthService.login({email, password}) // получили от сервера данные в ответ
+      
+      if(data) {
+        // добавим в localstorage полученный с сервера токен
+        setTokenToLocalStorage('token', data.token)
+        // изменили состояние (user в системе или нет)
+        dispatch(login(data)) // dispatch - метод обращения к slice, login - это логика из slice - data это action 
+        toast.success('You logged id.')
+        navigate('/') // переадресация на главную страницу, после того как user вошел в систему
+      }
     } catch (err: any) {
       // если есть err.response (ошибка с бэкенда или axios), то показать текст ошибки
-        const error = err.response?.data.message // опциональное (безопасное) свойство: https://learn.javascript.ru/optional-chaining#optsionalnaya-tsepochka
-        toast.error(error.toString()) // анимированное сообщение (строки ошибки)
+        //const error = err.response?.data.message // опциональное (безопасное) свойство: https://learn.javascript.ru/optional-chaining#optsionalnaya-tsepochka
+        //toast.error(error.toString()) // анимированное сообщение (строки ошибки)
       
     }
   }
-
-
 
 
 

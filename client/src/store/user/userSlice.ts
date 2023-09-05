@@ -1,4 +1,4 @@
-// redux-toolkit - это менеджер состояния, где состояние дотсупно во всех компонентах (не нужно передавать через пропсы)
+// redux-toolkit - это менеджер состояния, где состояние дотсупно во всех компонентах (состояние не нужно передавать через пропсы)
 // slice от redux-toolkit: https://redux-toolkit.js.org/tutorials/typescript
 import { IUser } from './../../types/types'; // наш тип (intefase)
 import { createSlice } from '@reduxjs/toolkit'
@@ -26,14 +26,14 @@ export const userSlice = createSlice({
   reducers: {
     // логика изменения состояния
     // эти методы должны принимать два параметра: 
-    // state - текущее состяоние и action - изменение состояние
+    // state - текущее состояние и action - изменение состояние
     // ВХОД
     login: (state, action: PayloadAction<IUser>) => {
         state.user = action.payload // payload - полезная нагрузка (данные IUser)
         state.isAuth = true // если user есть
     },
     // ВЫХОД
-    logout: (state, action) => {
+    logout: (state) => {
         state.isAuth = false
         state.user = null
     },

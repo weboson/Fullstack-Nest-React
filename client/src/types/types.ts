@@ -1,3 +1,4 @@
+// наши типы
 // тип для userSlice.ts (redux-toolkit)
 export interface IUser { 
     id: number

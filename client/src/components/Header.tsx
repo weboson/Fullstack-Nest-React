@@ -1,10 +1,11 @@
 import { FC } from 'react'; // TypeScript - интерфейс функционального компонента: FC
 import { Link, NavLink } from 'react-router-dom'; // Link - это обозначение ссылки
 import { FaBtc, FaSignOutAlt } from 'react-icons/fa'; // библиотека иконок
+import { useAuth } from '../hooks/useAuth';  // катомный хук получения сосотяние из Redux-Toolkit
 
 const Header: FC = () => {
     // залогинен ли пользователь
-    const isAuth = false;
+    const isAuth = useAuth(); // хук состояния
 
     return (
         <header className='flex items-center p-4 shadow-sm bg-slate-800 backdrop-blur-sm'>

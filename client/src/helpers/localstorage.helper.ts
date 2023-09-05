@@ -1,3 +1,5 @@
+// методы для LocalStorage
+
 // Получит / сохранить / удалить JWToken при LocalSorage браузера
 // localStorage - глобавльный объект хранения - JS
 

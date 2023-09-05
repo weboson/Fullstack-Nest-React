@@ -1,3 +1,6 @@
+// Readux-toolkit
+// фрагмент кода из документации
+// типизация методов управления сосостянием для TypeScript
 import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux'
 import type { RootState, AppDispatch } from './store'
