@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom"; // создает RouterApp
+import ProtectedRoute from "../components/ProtectedRoute"; // защищенная страница или 'transactions'/'categories'
 import Auth from "../pages/Auth";
 import Categories from "../pages/Categories";
 import ErrorPage from "../pages/ErrorPage";
@@ -19,11 +20,17 @@ export const router = createBrowserRouter([
             },
             {
                 path: "transactions",
-                element: <Transactions />,
+                element: 
+                <ProtectedRoute> 
+                    <Transactions />
+                </ProtectedRoute>,
             },
             {
                 path: "categories",
-                element: <Categories />,
+                element: 
+                <ProtectedRoute>
+                    <Categories />
+                </ProtectedRoute>,
             },
             {
                 path: "auth",
