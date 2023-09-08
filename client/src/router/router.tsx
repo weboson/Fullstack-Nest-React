@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"; // создает RouterApp
 import ProtectedRoute from "../components/ProtectedRoute"; // защищенная страница или 'transactions'/'categories'
 import Auth from "../pages/Auth";
-import Categories from "../pages/Categories";
+import Categories, { categoriesAction } from "../pages/Categories";
 import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home";
 import Layout from "../pages/Layout";
@@ -20,17 +20,20 @@ export const router = createBrowserRouter([
             },
             {
                 path: "transactions",
-                element: 
-                <ProtectedRoute> 
-                    <Transactions />
-                </ProtectedRoute>,
+                element: (    
+                    <ProtectedRoute> 
+                        <Transactions />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "categories",
-                element: 
-                <ProtectedRoute>
-                    <Categories />
-                </ProtectedRoute>,
+                action: categoriesAction, // из react-router-dom, подробнее: https://reactrouter.com/en/main/components/form#mutation-submissions
+                element: (
+                    <ProtectedRoute>
+                        <Categories />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "auth",
