@@ -11,7 +11,7 @@ import { ICategory } from "../types/types"; // наш тип на во
 // метод отправки данных формы из react-router-dom, подробнее: https://reactrouter.com/en/main/components/form#mutation-submissions
 // для action (отправки) формы - импорт в router.tsx
 export const categoriesAction = async ({ request}: any ) => {
-  switch (request.method) {
+  switch (request.method) { // если request.method == "POST"
     case "POST": {
       const formData = await request.formData()
       const title = {
@@ -21,17 +21,21 @@ export const categoriesAction = async ({ request}: any ) => {
       await instance.post('/categories', title)
       return null // так как функция должна что-то вернуть = хз почему
     }
-    case "PATCH": {
+    case "PATCH": { // если request.method == "PATCH"
       return null
     }
-    case "DELETE": {
+    case "DELETE": {  // если request.method == "DELETE"
+      const formData = await request.formData()
+      const categoryId = formData.get('id') // id из <input type="hidden" name="id" value={category.id} />
+      // axios-запрос
+      await instance.delete(`/categories/category/${categoryId}`) // /categories/category/ из бэкенда
       return null
     }
   }
 }
 
 //! GetAll
-// получить список категорий текущего пользователя
+// получить список категорий текущего пользователя (подключен в router.tsx, видимо, запускается автоматически при загрузки страницы, как useEffect())
 export const categoryLoader = async () => {
   const {data} = await instance.get<ICategory[]>('/categories') // axios - запрос
   return data // хранить будет в себе хук useLoaderData
@@ -43,7 +47,6 @@ const Categories: FC = () => {
   // метод(хук) от react-ROUTER-dom
   // получить все категории с помощью метода, хронящего данные на get запрос (в categoryLoader)
   const categories = useLoaderData() as ICategory[] // => как массив типов, подробнее: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions 
-  console.log(categories)
 
   // состояние активности окна (показывать или скрывать)
   const [visibleModal, setVisibleModal] = useState<boolean>(false)
@@ -65,7 +68,7 @@ const Categories: FC = () => {
                 </button>
       
                 <Form className="flex" method="delete" action="/categories">
-                  <input type="hidden" value={category.id} />
+                  <input type="hidden" name="id" value={category.id} />
                   <button type="submit">
                     <AiFillCloseCircle />
                   </button>
