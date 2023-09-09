@@ -33,3 +33,13 @@ export interface IResponseUserData {
     token: string
     user: IResponseUser // так как в ответе от бэкенда => внутри token: {user: {}}
 }
+
+
+// ожидаемый тип, который возвращается на get-запрос в методе categoryLoader (Categories.tsx)
+export interface ICategory {
+    title: string
+    id: number
+    createdAt: string
+    updatedAt: string
+    transactions: [] // пока массив
+}
