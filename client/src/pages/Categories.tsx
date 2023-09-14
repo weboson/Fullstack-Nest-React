@@ -13,7 +13,7 @@ import { ICategory } from "../types/types"; // наш тип на во
 export const categoriesAction = async ({ request}: any ) => {
   switch (request.method) { // если request.method == "POST"
     case "POST": {
-      const formData = await request.formData()
+      const formData = await request.formData() // данные формы
       const title = {
         title: formData.get('title'),
       }
@@ -21,7 +21,16 @@ export const categoriesAction = async ({ request}: any ) => {
       await instance.post('/categories', title)
       return null // так как функция должна что-то вернуть = хз почему
     }
+    // обновление категории (редактирование-сохранение)
     case "PATCH": { // если request.method == "PATCH"
+      const formData = await request.formData()
+      // получим данные с формы (input)
+      const category = { 
+        id: formData.get('id'),
+        title: formData.get('title')
+      }
+      // заменяем данные в БД на данные в форме
+      await instance.patch(`/categories/category/${category.id}`, category)
       return null
     }
     case "DELETE": {  // если request.method == "DELETE"
@@ -35,10 +44,10 @@ export const categoriesAction = async ({ request}: any ) => {
 }
 
 //! GetAll
-// получить список категорий текущего пользователя (подключен в router.tsx, видимо, запускается автоматически при загрузки страницы, как useEffect())
+// получить список категорий (проверки на текущего пользователя проходит в бэкенде "category.service.ts" (findAll)) (подключен в router.tsx, видимо, запускается автоматически при загрузки страницы, как useEffect())
 export const categoryLoader = async () => {
   const {data} = await instance.get<ICategory[]>('/categories') // axios - запрос
-  return data // хранить будет в себе хук useLoaderData
+  return data //! хранить в себе будет - хук useLoaderData (от react-router-dom)
 }
 
 
@@ -47,6 +56,10 @@ const Categories: FC = () => {
   // метод(хук) от react-ROUTER-dom
   // получить все категории с помощью метода, хронящего данные на get запрос (в categoryLoader)
   const categories = useLoaderData() as ICategory[] // => как массив типов, подробнее: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions 
+  
+  // id категории для patch
+  const [categoryId, setCategoryId] = useState<number>(0)
+  const [isEdit, setIsEdit] = useState<boolean>(false) // маркер для модального окна (edit или create)
 
   // состояние активности окна (показывать или скрывать)
   const [visibleModal, setVisibleModal] = useState<boolean>(false)
@@ -63,7 +76,11 @@ const Categories: FC = () => {
               <div key={index} className="group py-2 px-4 rounded-lg bg-blue-600 flex items-center relative gap-2">
               {category.title}
               <div className="absolute hidden px-3 left-0 top-0 bottom-0 right-0 rounded-lg bg-black/90 items-center justify-between group-hover:flex">
-                <button>
+                <button onClick={() => {
+                  setCategoryId(category.id) // получить id категории, которую хотим редактировать
+                  setVisibleModal(true) // для редактирования
+                  setIsEdit(true) // переключатель модалки с create на patch
+                }}>
                   <AiFillEdit />
                 </button>
       
@@ -89,6 +106,7 @@ const Categories: FC = () => {
   {visibleModal && (<CategoryModal type='post' setVisibleModal={setVisibleModal}/>)}
 
 {/* Edit Category Modal */}
+  {visibleModal && isEdit && (<CategoryModal type='patch' id={categoryId} setVisibleModal={setVisibleModal}/>)} 
   </>
   )
 };
