@@ -5,7 +5,7 @@ https://www.youtube.com/playlist?list=PLkUJHNMBzmtQj5qvTCqn0uMXFDG4ENiwf
 
 
 # Stack--
-## Client:
+## Client: npm run dev
 1. React: "^18.2.0"
 2. Vite: "^4.4.5" 
 3. Tailwind: "^3.3.3"
@@ -15,7 +15,7 @@ https://www.youtube.com/playlist?list=PLkUJHNMBzmtQj5qvTCqn0uMXFDG4ENiwf
 7. React-toastify: "^9.1.3"
 8. Reduxjs/toolkit: "^1.9.5"
 
-# Server:
+# Server: npm run start:dev
 1. Nest.js: 9.0.0
 2. PostgreSQL: 15.3
 3. TypeORM: 10.0.0
@@ -26,8 +26,13 @@ https://www.youtube.com/playlist?list=PLkUJHNMBzmtQj5qvTCqn0uMXFDG4ENiwf
 8. JWT (JSON Web Token)
 9. Typescript: 4.7.4
 
-## Running the app - SERVER (watch mode):
-- npm run start:dev (or "npx nest start --watch")
+## Running the app:
+1. frontend:
+    - dir: \client
+    - npm run dev
+2. backend: 
+    - dir: \server
+    - npm run start:dev (or "npx nest start --watch")
 
 
 ## Tools
