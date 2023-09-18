@@ -1,7 +1,27 @@
 import { FC } from "react";
+import { instance } from "../api/axios.api";
 import TransactionForm from "../components/TransactionForm";
+import { ICategory} from "../types/types";
+
+// загрузчик списка категорий => в форму
+export const transactionLoader = async () => {
+  const categories = await instance.get<ICategory[]>('/categories') // axios - запрос
+  
+  const data = {
+    categories: categories.data,
+  }
+  return data
+}
+
+// action 
+export const transactionAction = async ({ request }: any) => {
+  const data = {}
+  return data
+}
+
 
 const Transactions: FC = () => {
+
   return (
   <>
     <div className="grid grid-cols-3 gap-4 mt-4 items-start">

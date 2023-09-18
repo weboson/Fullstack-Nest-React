@@ -43,3 +43,9 @@ export interface ICategory {
     updatedAt: string
     transactions: [] // пока массив
 }
+
+
+// тип для загрузчика "transactionLoader"
+export interface IResponseTransactionLoader {
+    categories: ICategory[]
+}
