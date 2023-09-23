@@ -61,7 +61,7 @@ const Categories: FC = () => {
   const [categoryId, setCategoryId] = useState<number>(0)
   const [isEdit, setIsEdit] = useState<boolean>(false) // маркер для модального окна (edit или create)
 
-  // состояние активности окна (показывать или скрывать)
+  // состояние активности модального окна (показывать или скрывать)
   const [visibleModal, setVisibleModal] = useState<boolean>(false)
 
   return (

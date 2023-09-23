@@ -1,11 +1,15 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { Form, useLoaderData } from 'react-router-dom';
 import { IResponseTransactionLoader } from '../types/types';
+import CategoryModal from './CategoryModal'; // модальное окно добавления категорий
 
 const TransactionForm: FC = () => {
 
     const { categories } = useLoaderData() as IResponseTransactionLoader// useLoaderData из "react-router-dom"
+
+    // состояние активности модального окна (показывать или скрывать)
+    const [visibleModal, setVisibleModal] = useState<boolean>(false)
 
     return (
         <div className='rounded-md bg-slate-800 p-4'>
@@ -37,7 +41,7 @@ const TransactionForm: FC = () => {
                 }
 
                 <button
-                    //onClick={() => setVisibleModal(true)} 
+                    onClick={() => setVisibleModal(true)} 
                     className="flex max-w-fit items-center gap-2 text-white/50 hover:text-white">
                     <FaPlus />
                     <span>Manage Categories:</span>
@@ -60,6 +64,11 @@ const TransactionForm: FC = () => {
                     Submit
                 </button>
             </Form>
+
+
+            {/* Модальное окно */}
+            {/* Add Category Modal */}
+            {visibleModal && (<CategoryModal type='post' setVisibleModal={setVisibleModal} />)}
         </div>
     );
 };
