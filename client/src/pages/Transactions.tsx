@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { toast } from "react-toastify";
 import { instance } from "../api/axios.api";
 import TransactionForm from "../components/TransactionForm";
 import { ICategory} from "../types/types";
@@ -15,8 +16,26 @@ export const transactionLoader = async () => {
 
 // action 
 export const transactionAction = async ({ request }: any) => {
-  const data = {}
-  return data
+  switch (request.method) {
+    case 'POST': {
+      const formData = await request.formData() // данные с form-ы
+      // формируем объект из данных от формы
+      const newTransaction = {
+        title: formData.get('title'),
+        amount: +formData.get('amount'), // '+' - иначе ошибка
+        category: formData.get('category'),
+        type: formData.get('type'),
+      }
+
+      // вызов axios (axios.api.ts) - передали объект с данными введенные в форме
+      await instance.post('/transactions', newTransaction)
+      toast.success('Transaction added.') //библиотека анимированных сообщений
+      return null // т.к. должно что-то вернуть
+    }
+      case 'DELETE': {
+
+      }
+  }
 }
 
 
