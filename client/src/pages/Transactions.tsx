@@ -2,6 +2,7 @@ import { FC } from "react";
 import { toast } from "react-toastify";
 import { instance } from "../api/axios.api";
 import TransactionForm from "../components/TransactionForm";
+import TransactionTable from "../components/TransactionTable";
 import { ICategory} from "../types/types";
 
 // загрузчик списка категорий => в форму
@@ -75,7 +76,9 @@ const Transactions: FC = () => {
     </div>
 
     {/* Transactions Table */}
-    <h1 className="my-5">Table</h1>
+    <h1 className="my-5">
+      <TransactionTable />
+    </h1>
   </>);
 };
 
