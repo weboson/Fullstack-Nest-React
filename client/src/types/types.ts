@@ -35,17 +35,29 @@ export interface IResponseUserData {
 }
 
 
+// Возвращаемый тип транзакции
+export interface ITransaction {
+    amount: number
+    createdAt: string
+    updatedAt: string
+    title: string
+    type: string
+    id: number
+    category: ICategory
+}
+
 // ожидаемый тип, который возвращается на get-запрос в методе categoryLoader (Categories.tsx)
 export interface ICategory {
     title: string
     id: number
     createdAt: string
     updatedAt: string
-    transactions: [] // пока массив
+    transactions?: [] // необязательное поле. пока массив
 }
 
 
 // тип для загрузчика "transactionLoader"
 export interface IResponseTransactionLoader {
     categories: ICategory[]
+    transactions: ITransaction[]
 }

@@ -36,6 +36,9 @@ export class TransactionService {
       where: { // где текущий user.id === id  
         user: {id: id},
       },
+      relations: {
+        category: true // также вместе со своим категорием
+      },
       order: { // сортировать список по дате
         createdAt: 'DESC'
       }

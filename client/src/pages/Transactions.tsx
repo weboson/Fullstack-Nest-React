@@ -5,12 +5,15 @@ import TransactionForm from "../components/TransactionForm";
 import TransactionTable from "../components/TransactionTable";
 import { ICategory} from "../types/types";
 
-// загрузчик списка категорий => в форму
+// загрузчик списка категорий => в форму и транзакций => в таблицу
 export const transactionLoader = async () => {
-  const categories = await instance.get<ICategory[]>('/categories') // axios - запрос
-  
+  // axios - запросы
+  const categories = await instance.get<ICategory[]>('/categories') // получить все категории текущего пользователя
+  const transactions = await instance.get('/transactions')
+
   const data = {
     categories: categories.data,
+    transactions: transactions.data,
   }
   return data
 }
