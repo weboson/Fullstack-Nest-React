@@ -20,17 +20,19 @@ export class Transaction {
     @JoinColumn({ name: 'user_id' }) // объединить  в колонку "user_id"
     user: User;
 
-    // связь: привязать к текущей категории
-    @ManyToOne(() => Category, (category) => category.transactions)
+    // связь: привязать к текущей категории + если удалить привязанную категорию, то ей назначается NULL
+    @ManyToOne(() => Category, (category) => category.transactions, {
+        onDelete: 'SET NULL'
+    })
     @JoinColumn({ name: 'category_id' })
     category: Category;
 
     @Column()
     amount: number;
 
-    @CreateDateColumn() 
+    @CreateDateColumn()
     createdAt: Date;
 
-    @UpdateDateColumn() 
+    @UpdateDateColumn()
     updatedAt: Date;
 }

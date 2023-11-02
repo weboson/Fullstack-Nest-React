@@ -3,11 +3,13 @@ import { FC } from 'react'; // тип функционального компо�
 import { FaTrash } from 'react-icons/fa';
 import { useLoaderData } from 'react-router-dom';
 import { IResponseTransactionLoader } from '../types/types';
+// хэлперы 
 import { formatDate } from '../helpers/date.helper' // форматирование даты в более читабельный вид
+import { formatToUSD } from '../helpers/currency.helper' // форматирование даты в более читабельный вид
 
 const TransactionTable: FC = () => {
     // получим данные от посредника useLoaderData (react-router-dom) <= transactionLoader
-    const {transactions} = useLoaderData() as IResponseTransactionLoader // как тип IResponseTransactionLoader
+    const { transactions } = useLoaderData() as IResponseTransactionLoader // как тип IResponseTransactionLoader
     //console.log(transactions)
 
     return <>
@@ -28,12 +30,22 @@ const TransactionTable: FC = () => {
                         <tr key={idx}>
                             <td>{idx + 1}</td>
                             <td> {transaction.title} </td>
-                            <td> {transaction.amount} </td>
-                            <td> {transaction.category.title} </td>
+                            <td className={
+                                transaction.type === 'income'
+                                    ? 'text-green-500'
+                                    : 'text-red-500'
+                            }
+                            >
+                                {transaction.type == 'income'
+                                    ? `+ ${formatToUSD.format(transaction.amount)}`
+                                    : `- ${formatToUSD.format(transaction.amount)}`
+                                }
+                            </td>
+                            <td> {transaction.category?.title || `Other`} </td>
                             <td>{formatDate(transaction.createdAt)}</td>
-                            <td> 
+                            <td>
                                 <button className='btn hover:btn-red ml-auto'>
-                                    <FaTrash/>
+                                    <FaTrash />
                                 </button>
                             </td>
                         </tr>
