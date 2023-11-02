@@ -3,6 +3,7 @@ import { FC } from 'react'; // тип функционального компо�
 import { FaTrash } from 'react-icons/fa';
 import { useLoaderData } from 'react-router-dom';
 import { IResponseTransactionLoader } from '../types/types';
+import { formatDate } from '../helpers/date.helper' // форматирование даты в более читабельный вид
 
 const TransactionTable: FC = () => {
     // получим данные от посредника useLoaderData (react-router-dom) <= transactionLoader
@@ -29,7 +30,7 @@ const TransactionTable: FC = () => {
                             <td> {transaction.title} </td>
                             <td> {transaction.amount} </td>
                             <td> {transaction.category.title} </td>
-                            <td> {transaction.createdAt} </td>
+                            <td>{formatDate(transaction.createdAt)}</td>
                             <td> 
                                 <button className='btn hover:btn-red ml-auto'>
                                     <FaTrash/>
