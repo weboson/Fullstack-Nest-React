@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
-import { Form, useLoaderData } from 'react-router-dom';
+import { Form, useLoaderData } from 'react-router-dom'; // Form - специальная форма хронящая данные из формы
 import { IResponseTransactionLoader } from '../types/types';
 import CategoryModal from './CategoryModal'; // модальное окно добавления категорий
 
@@ -40,21 +40,16 @@ const TransactionForm: FC = () => {
                     )
                 }
 
-                <button
-                    onClick={() => setVisibleModal(true)} 
-                    className="flex max-w-fit items-center gap-2 text-white/50 hover:text-white">
-                    <FaPlus />
-                    <span>Manage Categories:</span>
-                </button>
+
 
                 {/* Radio Buttons */}
-                <div className='flex items-center gap-4'>
+                <div className='flex items-center gap-4' >
                     <label className='flex cursor-pointer items-center gap-2'>
-                        <input type="radio" name='type' value={'income'} className='form-radio text-blue-600' />
+                        <input type="radio" name='type' value={'income'} className='form-radio text-blue-600' required/>
                         <span>Income</span>
                     </label>
                     <label className='flex cursor-pointer items-center gap-2'>
-                        <input type="radio" name='type' value={'expense'} className='form-radio text-blue-600' />
+                        <input type="radio" name='type' value={'expense'} className='form-radio text-blue-600' required/>
                         <span>Expense</span>
                     </label>
                 </div>
@@ -64,6 +59,15 @@ const TransactionForm: FC = () => {
                     Submit
                 </button>
             </Form>
+
+
+            {/* Add Category button*/}
+            <button
+                onClick={() => setVisibleModal(true)}
+                className="flex max-w-fit items-center gap-2 text-white/50 hover:text-white mt-2">
+                <FaPlus />
+                <span>Manage Categories:</span>
+            </button>
 
 
             {/* Модальное окно */}

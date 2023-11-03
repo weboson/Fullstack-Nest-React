@@ -1,7 +1,7 @@
 // таблица транзакций
 import { FC } from 'react'; // тип функционального компонента от React
 import { FaTrash } from 'react-icons/fa';
-import { useLoaderData } from 'react-router-dom';
+import { Form, useLoaderData } from 'react-router-dom';
 import { IResponseTransactionLoader } from '../types/types';
 // хэлперы 
 import { formatDate } from '../helpers/date.helper' // форматирование даты в более читабельный вид
@@ -44,9 +44,12 @@ const TransactionTable: FC = () => {
                             <td> {transaction.category?.title || `Other`} </td>
                             <td>{formatDate(transaction.createdAt)}</td>
                             <td>
-                                <button className='btn hover:btn-red ml-auto'>
-                                    <FaTrash />
-                                </button>
+                                <Form method='delete' action="/transactions">
+                                    <input type="hidden" name='id' value={transaction.id}/>
+                                    <button className='btn hover:btn-red ml-auto'>
+                                        <FaTrash />
+                                    </button>
+                                </Form>
                             </td>
                         </tr>
                     ))}

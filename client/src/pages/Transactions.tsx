@@ -5,6 +5,7 @@ import TransactionForm from "../components/TransactionForm";
 import TransactionTable from "../components/TransactionTable";
 import { ICategory} from "../types/types";
 
+//!Get
 // загрузчик списка категорий => в форму и транзакций => в таблицу
 export const transactionLoader = async () => {
   // axios - запросы
@@ -20,10 +21,14 @@ export const transactionLoader = async () => {
 
 // action 
 export const transactionAction = async ({ request }: any) => {
+  // request === Request {method: 'POST', url: 'http://localhost:5173/transactions', headers: Headers, destination: '', referrer: 'about:client', …}
+  // console.log(request)
   switch (request.method) {
+  //!Post
     case 'POST': {
-      const formData = await request.formData() // данные с form-ы
-      // формируем объект из данных от формы
+      const formData = await request.formData() // отправленные данные из Form (TransactionForm.tsx)
+
+      // формируем объект из данных от формы (Form от react-router-dom)
       const newTransaction = {
         title: formData.get('title'),
         amount: +formData.get('amount'), // '+' - иначе ошибка
@@ -36,8 +41,13 @@ export const transactionAction = async ({ request }: any) => {
       toast.success('Transaction added.') //библиотека анимированных сообщений
       return null // т.к. должно что-то вернуть
     }
+//!Delete
       case 'DELETE': {
-
+        const formData = await request.formData();
+        const transactionId = formData.get('id');
+        await instance.delete(`/transactions/transaction/${transactionId}`)
+        toast.success('Transaction deleted')
+        return null
       }
   }
 }
