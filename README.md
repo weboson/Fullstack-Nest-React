@@ -14,6 +14,7 @@ https://www.youtube.com/playlist?list=PLkUJHNMBzmtQj5qvTCqn0uMXFDG4ENiwf
 6. Axios: "^1.5.0"
 7. React-toastify: "^9.1.3"
 8. Reduxjs/toolkit: "^1.9.5"
+9. React-paginate: "^8.2.0"
 
 # Server: npm run start:dev
 1. Nest.js: 9.0.0

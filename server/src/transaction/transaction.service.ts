@@ -1,16 +1,17 @@
+//! + логика Pagination
 import { Transaction } from './entities/transaction.entity';
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
-import { Repository } from 'typeorm';
+import { Repository } from 'typeorm'; // https://typeorm.io/repository-api
 
 @Injectable()
 export class TransactionService {
   constructor(
     // инъекция таблицы (схемы) user 
     @InjectRepository(Transaction)
-    // обернули таблицу БД в Repository из typeORM, чтобы получить к таблице контроль и методы для поиска (монипуляций)
+    // обернули таблицу БД в Repository из typeORM, чтобы получить к таблице контроль и методы для поиска (манипуляций)
     private readonly transactionRepository: Repository<Transaction> // пример дженерика Array<number> = [1,2,3]
   ) {}
 
@@ -90,7 +91,7 @@ export class TransactionService {
   }
 
   //! логика Pagination
-  async findAllWithPagination(id: number, page: number, limit: number) {
+  async findAllWithPagination(id: number, page: number, limit: number) { // подробнее про .fibd({params})  https://typeorm.io/changelog#features-8
     const transaction = await this.transactionRepository.find({ // найти в таблицу Transaction
       where: { // определенного user-a
         user: {id: id}, // где user.id == id из аргументов
@@ -110,7 +111,7 @@ export class TransactionService {
   }
 
 
-  //! @Get - получить сумму всех доходом или расходом (в зависимости от :type)
+  //! @Get - получить сумму всех доходов или расходов (в зависимости от :type) для диаграммы 
   async findAllByType(id: number, type: string) {
     const transaction = await this.transactionRepository.find({
       where: {

@@ -28,9 +28,10 @@ export class TransactionController {
   //url/transactions/pagination?page=1&limit=3
   @Get('pagination') // отдельный роут (url)
   @UseGuards(JwtAuthGuard) // проверка на авторизацию пользователя
+  // метод
   findAllWithPagination(@Req() req, @Query('page') page: number, @Query('limit') limit: number) {
     // id из JwtAuthGuard (auth.service.ts), который, если пользователь авторизован, то передает ему и id, email 
-    return this.transactionService.findAllWithPagination(+req.user.id, +page, +limit)
+    return this.transactionService.findAllWithPagination(+req.user.id, +page, +limit) // http://localhost:3000/api/transactions/__pagination?page=1&limit=1__
   }
 
 
