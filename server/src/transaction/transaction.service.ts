@@ -111,12 +111,13 @@ export class TransactionService {
   }
 
 
-  //! @Get - получить сумму всех доходов или расходов (в зависимости от :type) для диаграммы 
+  //! @Get (TOTAL)- получить сумму всех доходов или расходов (в зависимости от :type) для диаграммы 
   async findAllByType(id: number, type: string) {
+    // ! собираем массив из транзакций определенного type (type определяется из url)
     const transaction = await this.transactionRepository.find({
       where: {
         user: {id: id}, // где user.id == id из аргументов
-        type: type, // отфильтровали 'expense' и  'income'
+        type: type, // отфильтровали: type == 'expense' или 'income'
       }
     })
 

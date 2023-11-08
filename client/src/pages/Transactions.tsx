@@ -1,20 +1,29 @@
 import { FC } from "react";
+import { useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
 import { instance } from "../api/axios.api";
 import TransactionForm from "../components/TransactionForm";
 import TransactionTable from "../components/TransactionTable";
-import { ICategory} from "../types/types";
+import { formatToUSD } from "../helpers/currency.helper";
+import { ICategory, IResponseTransactionLoader, IResponseUser, ITransaction} from "../types/types";
 
 //!Get
 // загрузчик списка категорий => в форму и транзакций => в таблицу
 export const transactionLoader = async () => {
   // axios - запросы
   const categories = await instance.get<ICategory[]>('/categories') // получить все категории текущего пользователя
-  const transactions = await instance.get('/transactions')
+  const transactions = await instance.get<ITransaction[]>('/transactions') // получить все транзакции тек. польз-я
+
+  // для суммирования “income” или “expense” (total)
+  const totalIncome = await instance.get<number>('/transactions/income/find')
+  const totalExpense = await instance.get<number>('/transactions/expense/find')
+
 
   const data = {
     categories: categories.data,
     transactions: transactions.data,
+    totalIncome: totalIncome.data,
+    totalExpense: totalExpense.data,
   }
   return data
 }
@@ -55,6 +64,9 @@ export const transactionAction = async ({ request }: any) => {
 
 const Transactions: FC = () => {
 
+  // возьмём данные загрузчика (total) через хранитель "useLoaderData" (от react-router-dom)
+  const {totalExpense, totalIncome} = useLoaderData() as IResponseTransactionLoader
+
   return (
   <>
     <div className="grid grid-cols-3 gap-4 mt-4 items-start">
@@ -71,7 +83,7 @@ const Transactions: FC = () => {
               Total Income:
             </p>
             <p className="mt-2 rounded-sm bg-green-600 p-1 text-center">
-              1000$
+              {formatToUSD.format(totalIncome)}
             </p>
           </div>
           <div>
@@ -79,7 +91,7 @@ const Transactions: FC = () => {
               Total Expense:
             </p>
             <p className="mt-2 rounded-sm bg-red-500 p-1 text-center">
-              1000$
+            {formatToUSD.format(totalExpense)}
             </p>
           </div>
         </div>

@@ -18,7 +18,7 @@ export class TransactionController {
   }
 
   //! Для суммирования дохода или расхода: expense' | 'income';
-  @Get(':type/find') // type - это 'expense' или  'income'
+  @Get(':type/find') // type - это переменная == 'expense' или  'income'
   @UseGuards(JwtAuthGuard) // проверка на авторизацию пользователя
   findAllByType(@Req() req, @Param('type') type: string) {
     return this.transactionService.findAllByType(+req.user.id, type)

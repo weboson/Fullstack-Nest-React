@@ -1,4 +1,4 @@
-// наши типы
+//! наши типы
 // тип для userSlice.ts (redux-toolkit)
 export interface IUser { 
     id: number
@@ -56,8 +56,10 @@ export interface ICategory {
 }
 
 
-// тип для загрузчика "transactionLoader"
+// тип для загрузчика "transactionLoader", который вернет данные: категории, транзкции, значения income и expense
 export interface IResponseTransactionLoader {
     categories: ICategory[]
     transactions: ITransaction[]
+    totalIncome: number
+    totalExpense: number
 }
