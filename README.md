@@ -1,8 +1,41 @@
 # Fullstack Nest-React
 
 ## I'm learning fullstask from video (playlist): 
-https://www.youtube.com/playlist?list=PLkUJHNMBzmtQj5qvTCqn0uMXFDG4ENiwf 
+> https://www.youtube.com/playlist?list=PLkUJHNMBzmtQj5qvTCqn0uMXFDG4ENiwf 
 
+***
+/ (home):
+![image](https://github.com/weboson/Fullstack-Nest-React/assets/42917939/1f16e01c-568a-4100-b878-70521fb337d7)
+
+/auth (Registration):
+![image](https://github.com/weboson/Fullstack-Nest-React/assets/42917939/2bd6476b-6d3a-4f4b-9b89-5cb87337c9f3)
+
+/auth (Log in):
+![image](https://github.com/weboson/Fullstack-Nest-React/assets/42917939/8087d45c-6d60-4a02-879d-962d7e570698)
+
+/auth (authorized):
+![image](https://github.com/weboson/Fullstack-Nest-React/assets/42917939/0d2d45a7-6bf0-4b58-9b51-d3837ae884c4)
+
+/categories (GetAll):
+![image](https://github.com/weboson/Fullstack-Nest-React/assets/42917939/d2ee0a98-3942-43c5-8abb-e8952945ae19)
+
+Delete and Patch:
+![image](https://github.com/weboson/Fullstack-Nest-React/assets/42917939/5e1031f5-6f21-462b-8b23-86b0869a8344)
+
+Modal window for Patch
+![image](https://github.com/weboson/Fullstack-Nest-React/assets/42917939/646d17af-0744-4a1c-ab95-a978eb6f41a5)
+
+/transaction (Form, Table, Counter and Chart):
+- Create
+- Post
+- Get All
+- Delete
+- Counter sum
+- Chart
+- Pagination
+![image](https://github.com/weboson/Fullstack-Nest-React/assets/42917939/b3a5c8a9-c885-4a28-a7b8-081cfd1ea075)
+
+***
 
 # Stack--
 ## Client: npm run dev
@@ -17,7 +50,7 @@ https://www.youtube.com/playlist?list=PLkUJHNMBzmtQj5qvTCqn0uMXFDG4ENiwf
 9. React-paginate: "^8.2.0"
 10. Recharts: "^2.9.3"
 
-# Server: npm run start:dev
+## Server: npm run start:dev
 1. Nest.js: 9.0.0
 2. PostgreSQL: 15.3
 3. TypeORM: 10.0.0
@@ -31,10 +64,14 @@ https://www.youtube.com/playlist?list=PLkUJHNMBzmtQj5qvTCqn0uMXFDG4ENiwf
 ## Running the app:
 1. frontend:
     - dir: \client
-    - npm run dev
+    ```
+    $ npm run dev 
+    ```
 2. backend: 
     - dir: \server
-    - npm run start:dev (or "npx nest start --watch")
+    ```
+    $ npm run start:dev (or "npx nest start --watch")
+    ```
 
 
 ## Tools
@@ -43,17 +80,18 @@ https://www.youtube.com/playlist?list=PLkUJHNMBzmtQj5qvTCqn0uMXFDG4ENiwf
 3. Chrome
 4. pgAdmin4
 
-## Installation Nestjs
+
+### Installation Nestjs
 1. npm install --global yarn
 2. yarn global add @nestjs/cli
 3. npx @nestjs/cli new Project
 
-## Running the app (watch mode)
+### Running the app (watch mode)
 - npm run start:dev (or "npx nest start --watch")
 
-## Stay in touch
+### Stay in touch
 - Author - [Rishat Weboson](...)
 - Website - [https://mysite.com](...)
 
-## License
+### License
 Nest is [MIT licensed](LICENSE).
