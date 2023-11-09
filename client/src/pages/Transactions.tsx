@@ -2,10 +2,11 @@ import { FC } from "react";
 import { useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
 import { instance } from "../api/axios.api";
+import Chart from "../components/Chart"; // диаграмма (lib recharts)
 import TransactionForm from "../components/TransactionForm";
 import TransactionTable from "../components/TransactionTable";
 import { formatToUSD } from "../helpers/currency.helper";
-import { ICategory, IResponseTransactionLoader, IResponseUser, ITransaction} from "../types/types";
+import { ICategory, IResponseTransactionLoader, ITransaction} from "../types/types";
 
 //!Get
 // загрузчик списка категорий => в форму и транзакций => в таблицу
@@ -96,7 +97,9 @@ const Transactions: FC = () => {
           </div>
         </div>
 
-        <>Chart</>
+        <>
+        <Chart totalExpense={totalExpense} totalIncome={totalIncome} />
+        </>
       </div>
     </div>
 
